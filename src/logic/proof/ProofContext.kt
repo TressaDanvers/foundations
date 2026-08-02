@@ -3,6 +3,7 @@ package logic.proof
 import logic.Logeme
 import logic.implication.Implication
 import logic.implication.implies
+import logic.tru
 
 class ProofContext {
   private val hypothesis: MutableList<Logeme> = mutableListOf()
@@ -27,7 +28,7 @@ class ProofContext {
 
   val qed: Nothing get() =
     if (conclusion == null)
-      throw EmptyProofException("cannot form a proof of nothing")
+      throw EarlyReturn(tru)
     else if (hypothesis.isEmpty())
       throw EarlyReturn(conclusion as Logeme)
     else throw EarlyReturn(hypothesis

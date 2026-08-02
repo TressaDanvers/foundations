@@ -9,7 +9,7 @@ val equivInt = proof {
   argue(equiv)
   argue(conjLeft(equiv.antecedent, equiv.consequent))
   qed
-}.getOrThrow()
+}
 
 val equivLeft = proof {
   argue(equiv)
@@ -18,7 +18,7 @@ val equivLeft = proof {
   argue(aInt(conjLeft(phi implies psi, psi implies phi), phi equiv psi))
   argue(mpd(phi equiv psi, (phi implies psi) and (psi implies phi), phi implies psi))
   qed
-}.getOrThrow()
+}
 
 val equivRight = proof {
   argue(equiv)
@@ -27,4 +27,4 @@ val equivRight = proof {
   argue(aInt(conjRight(phi implies psi, psi implies phi), phi equiv psi))
   argue(mpd(phi equiv psi, (phi implies psi) and (psi implies phi), psi implies phi))
   qed
-}.getOrThrow()
+}
