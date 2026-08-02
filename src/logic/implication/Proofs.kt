@@ -3,11 +3,16 @@ package logic.implication
 import logic.*
 import logic.proof.*
 
+val mp = proof {
+  assuming(phi)
+  argue(assuming(phi implies psi))
+  qed
+}.getOrThrow()
+
 val mpd = proof {
   assuming(phi implies psi)
   assuming(phi implies (psi implies chi))
   argue(aDist)
-  argue(mp(phi implies psi, phi implies chi))
   qed
 }.getOrThrow()
 

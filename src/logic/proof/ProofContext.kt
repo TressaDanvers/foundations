@@ -9,18 +9,20 @@ class ProofContext {
   private val currentForm: MutableList<Logim> = mutableListOf()
   private val conclusion get() = currentForm.lastOrNull()
 
-  fun assuming(hypothesized: Logim) {
+  fun assuming(hypothesized: Logim): Logim {
     hypothesis += hypothesized
     currentForm += hypothesized
+    return hypothesized
   }
 
-  fun argue(argument: Logim) {
+  fun argue(argument: Logim): Logim {
     var arg = argument
     currentForm += arg
     while (arg is Implication && currentForm.any { it == arg.antecedent }) {
       arg = arg.consequent
       currentForm += arg
     }
+    return arg
   }
 
   val qed: Nothing get() =
