@@ -1,9 +1,7 @@
 package logic.proof
 
-import logic.Logeme
-import logic.implication.Implication
-import logic.implication.implies
-import logic.tru
+import logic.*
+import logic.implication.*
 
 class ProofContext {
   private val hypothesis: MutableList<Logeme> = mutableListOf()
@@ -19,7 +17,9 @@ class ProofContext {
   fun argue(argument: Logeme): Logeme {
     var arg = argument
     currentForm += arg
-    while (arg is Implication && currentForm.any { it == arg.antecedent }) {
+    while (arg is Implication) {
+      if (currentForm.none { it == arg.antecedent })
+        assuming(arg.antecedent)
       arg = arg.consequent
       currentForm += arg
     }

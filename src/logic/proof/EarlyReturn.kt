@@ -1,5 +1,5 @@
 package logic.proof
 
-import logic.Logeme
+import logic.*
 
 internal class EarlyReturn(val final: Logeme): Throwable()

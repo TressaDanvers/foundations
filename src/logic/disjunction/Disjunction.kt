@@ -1,7 +1,6 @@
 package logic.disjunction
 
-import logic.Logeme
-import logic.Operation
+import logic.*
 
 data class Disjunction(
   override val antecedent: Logeme,

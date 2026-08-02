@@ -1,7 +1,6 @@
 package logic.equivalence
 
-import logic.Logeme
-import logic.Operation
+import logic.*
 
 data class Equivalence(
   override val antecedent: Logeme,
