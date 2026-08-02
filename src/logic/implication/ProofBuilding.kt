@@ -2,7 +2,7 @@ package logic.implication
 
 import logic.Logim
 
-private class EarlyReturn(val final: Implication): Exception()
+private class EarlyReturn(val final: Logim): Exception()
 class LogicalError(message: String): Exception(message)
 
 class ProofBuilder {
@@ -29,8 +29,7 @@ class ProofBuilder {
     if (conclusion == null)
       throw LogicalError("cannot form a proof of nothing")
     else if (hypothesis.isEmpty())
-      if (conclusion is Implication) throw EarlyReturn(conclusion as Implication)
-      else throw LogicalError("cannot form a proof over a non-implication")
+      throw EarlyReturn(conclusion as Logim)
     else throw EarlyReturn(hypothesis
       .foldRight(conclusion!!) { a, b -> a implies b } as Implication)
 }
