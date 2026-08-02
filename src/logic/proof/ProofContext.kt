@@ -1,11 +1,10 @@
-package logic.implication
+package logic.proof
 
 import logic.Logim
+import logic.implication.Implication
+import logic.implication.implies
 
-private class EarlyReturn(val final: Logim): Exception()
-class LogicalError(message: String): Exception(message)
-
-class ProofBuilder {
+class ProofContext {
   private val hypothesis: MutableList<Logim> = mutableListOf()
   private val currentForm: MutableList<Logim> = mutableListOf()
   private val conclusion get() = currentForm.lastOrNull()
@@ -17,23 +16,18 @@ class ProofBuilder {
 
   fun argue(argument: Logim) {
     var arg = argument
-    while (true) {
-      currentForm += arg
-      if (arg !is Implication ||
-        currentForm.none { it == arg.antecedent }) break
+    currentForm += arg
+    while (arg is Implication && currentForm.any { it == arg.antecedent }) {
       arg = arg.consequent
+      currentForm += arg
     }
   }
 
   val qed: Nothing get() =
     if (conclusion == null)
-      throw LogicalError("cannot form a proof of nothing")
+      throw EmptyProofException("cannot form a proof of nothing")
     else if (hypothesis.isEmpty())
       throw EarlyReturn(conclusion as Logim)
     else throw EarlyReturn(hypothesis
       .foldRight(conclusion!!) { a, b -> a implies b } as Implication)
 }
-
-fun Proof(f: ProofBuilder.() -> Nothing) =
-  try { f(ProofBuilder()) }
-  catch(er: EarlyReturn) { er.final }
